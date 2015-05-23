@@ -1,0 +1,3 @@
+Install:  Copy the contents of GameData folder into your gamedata folder.
+
+MAKE SURE YOU BACK UP YOUR SAVES BEFORE YOU USE THIS.

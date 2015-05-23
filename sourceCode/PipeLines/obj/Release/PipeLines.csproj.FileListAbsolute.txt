@@ -1,0 +1,23 @@
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Release\PipeLines.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Release\PipeLines.pdb
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Release\Assembly-CSharp.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Release\Launchpad.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Release\UnityEngine.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Release\Assembly-CSharp-firstpass.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Release\TDx.TDxInput.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Release\Mono.Cecil.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Release\KSPAPIExtensions.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Release\Mono.Security.dll
+E:\ksp90\KSP_win\GameData\PipeLines\CivilianManagement.dll
+E:\ksp90\KSP_win\GameData\PipeLines\CivilianManagement.pdb
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\obj\Release\CivilianManagement.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\obj\Release\CivilianManagement.pdb
+E:\ksp90\KSP_win\GameData\CivilianManagement\CivilianManagement.dll
+E:\ksp90\KSP_win\GameData\CivilianManagement\CivilianManagement.pdb
+D:\ksp90\KSP_win\GameData\CivilianManagement\CivilianManagement.dll
+D:\ksp90\KSP_win\GameData\CivilianManagement\CivilianManagement.pdb
+D:\ksp90\KSP_win\GameData\NetherdyneAerospace\CivilianManagement\CivilianManagement.dll
+D:\ksp90\KSP_win\GameData\NetherdyneAerospace\CivilianManagement\CivilianManagement.pdb
+C:\Users\potato1\Documents\Visual Studio 2013\Projects\PipeLines\PipeLines\obj\Release\PipeLines.csprojResolveAssemblyReference.cache
+D:\ksp-win-1-0-0\KSP_win\GameData\NetherdyneAerospace\CivilianManagement\CivilianManagement.dll
+D:\ksp-win-1-0-0\KSP_win\GameData\NetherdyneAerospace\CivilianManagement\CivilianManagement.pdb

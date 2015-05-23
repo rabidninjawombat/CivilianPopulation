@@ -1,0 +1,13 @@
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Debug\PipeLines.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Debug\PipeLines.pdb
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Debug\Assembly-CSharp.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Debug\Launchpad.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Debug\UnityEngine.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Debug\Assembly-CSharp-firstpass.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Debug\TDx.TDxInput.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Debug\Mono.Cecil.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Debug\KSPAPIExtensions.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\bin\Debug\Mono.Security.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\obj\Debug\PipeLines.csprojResolveAssemblyReference.cache
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\obj\Debug\PipeLines.dll
+c:\users\potato1\documents\visual studio 2013\Projects\PipeLines\PipeLines\obj\Debug\PipeLines.pdb

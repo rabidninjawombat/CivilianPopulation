@@ -1,0 +1,57 @@
+PART {
+	name = pipeNetwork
+	module = Part
+	author = Hester
+
+MODEL
+  {
+    model = NetherdyneAerospace/CivilianManagement/Assets/karboniteSmelter
+	//texture = Decal00 , UmbraSpaceIndustries/Kolonization/Assets/Decal07
+//texture = Decal00 , UmbraSpaceIndustries/Kolonization/Assets/Decal07
+//texture = Decal00_GLOW , UmbraSpaceIndustries/Kolonization/Assets/Decal07_GLOW
+}
+	scale = 1
+	rescaleFactor = 1
+
+	node_stack_top = 0.0, 2.6, 0.0, 0.0, 1.0, 0.0, 2
+		node_stack_bottom = 0.0, -2.6, 0.0, 0.0, 1.0, 0.0, 2
+
+	TechRequired = advScienceTech
+	entryCost = 0
+	cost = 16500
+	category = Utility
+	subcategory = 0
+	title = PipelineNetwork
+	manufacturer = Netherdyne Aerospace
+	description = After several weeks of explosions while playing with lasers and Karbonite (seriously we could hear it all the way across the Torus workshop floor) our engineers found a precisely tuned setting for the lasers which converts Karbonite to Liquid Fuel and Oxidizer rather than into a fireball.
+	attachRules = 1,0,1,1,0
+
+	// --- standard part parameters ---
+	mass = 10
+	dragModelType = override
+	maximum_drag = 0
+	minimum_drag = 0
+	angularDrag = 0
+	crashTolerance = 7
+	breakingForce = 200
+	breakingTorque = 200
+	maxTemp = 5000
+	//ThermalAnim = Heat;
+
+	//MODULE
+	//{
+	// name = Smelter
+	// ThermalAnim = Heat;
+	//}
+
+	// Convert Ore to Metal
+	MODULE
+	{
+		name = PipeLine
+		
+		
+	}
+	
+	
+}
+
