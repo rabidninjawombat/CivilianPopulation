@@ -1,5 +1,0 @@
-CIV Management todo list:
-1. xEPL support
-2. xFix drill converter
-3. Change "ore" to "metalore" following EPL chagne
-4.  Check engineer recruitment glitch
