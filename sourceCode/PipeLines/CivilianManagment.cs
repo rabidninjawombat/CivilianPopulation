@@ -51,10 +51,10 @@ namespace PipeLines
             this.part.RequestResource(InspirationResourceName, 99999999, ResourceFlowMode.NO_FLOW); //reset this part's resource only
 			
         }
-        #region regolith
+		   #region regolith
         protected override float GetHeatMultiplier(ConverterResults result, double deltaTime)
         {
-            return base.GetHeatMultiplier(result, deltaTime);
+            return 0f;
         }
 
         [KSPField]
@@ -65,7 +65,7 @@ namespace PipeLines
 
         [KSPField]
         public string RequiredResources = "";
-
+	
         public ConversionRecipe Recipe
         {
             get { return _recipe ?? (_recipe = LoadRecipe()); }
@@ -204,6 +204,9 @@ namespace PipeLines
 
 
         #endregion
+		
+		
+		
         public override void OnUpdate()
         {
             Actions["StartResourceConverterAction"].active = false;
@@ -422,12 +425,7 @@ namespace PipeLines
             return foundMaster;
         }
 
-        Dictionary<string, double> needs;
-        Dictionary<string, double> wastes;
-        double dConsumptionRate;
-        Dictionary<string, double> resourceDensity;
-        Dictionary<string, string> wasteProducts;
-       
+                               
         public override void OnStart(PartModule.StartState state)
         {
             
@@ -466,8 +464,7 @@ namespace PipeLines
 
             base.OnStart(state);
         }
-
-        bool getTheaterBonus()
+          bool getTheaterBonus()
         {
             var theaters = vessel.FindPartModulesImplementing<MovieTheater>();
             foreach (MovieTheater t in theaters)
@@ -475,8 +472,17 @@ namespace PipeLines
                     return true;
             return false;
         }
-        #region regolith
-        [KSPField] 
+
+   #region regolith
+		
+		
+		protected override float GetHeatMultiplier(ConverterResults result, double deltaTime)
+        {
+            return 0f;
+        }
+
+
+	   [KSPField] 
         public string RecipeInputs = "";
 
         [KSPField]
@@ -485,6 +491,7 @@ namespace PipeLines
         [KSPField]
         public string RequiredResources = "";
 
+		
         public ConversionRecipe Recipe
         {
             get { return _recipe ?? (_recipe = LoadRecipe()); }
@@ -619,10 +626,8 @@ namespace PipeLines
             sb.Append("\n");
             return sb.ToString();
         }
-
-    
-
-        #endregion
+		
+		#endregion
 
         double calculateRent(double x)
         {
@@ -650,19 +655,17 @@ namespace PipeLines
         void applyCalculations(double dt)
         {
           //  print("apstart");
-            double foodbudget =  base.ResBroker.AmountAvailable(this.part,foodResourceName, dt, "all");//getResourceBudget(foodResourceName);
+            double foodbudget =  base.ResBroker.AmountAvailable(this.part,foodResourceName, dt, "ALL_VESSEL");//getResourceBudget(foodResourceName);
            // PartResourceDefinition def = new PartResourceDefinition(foodResourceName);
            // print("1");
             //mass = unit * density
             //mass / density = unit
             double foodRequired = kerbalMass / 0.28102905982906; //lol density of food in kg
-            double currentPop = base.ResBroker.AmountAvailable(this.part, populationResourceName, dt, "all");//getResourceBudget(populationResourceName);
-            double co2 = base.ResBroker.AmountAvailable(this.part, "CarbonDioxide", dt, "all");
-            double co2Cap = base.ResBroker.StorageAvailable(this.part, "CarbonDioxide", dt, "all", 0);
-            
+            double currentPop = base.ResBroker.AmountAvailable(this.part, populationResourceName, dt, "ALL_VESSEL");//getResourceBudget(populationResourceName);
+           
             growthRate = (float)(currentPop / reproductionRate);
             if (getTheaterBonus())
-                growthRate += growthRate * .5f;
+                growthRate += growthRate * .5f;	
             if (growthRate < 1)  //can't grow population unless it's big enough
                 growthRate = 0;
            // print("2");
@@ -733,9 +736,6 @@ namespace PipeLines
                 this.part.RequestResource(foodResourceName, -foodRequired);
 
             }
-           // print("6");
-            //spend the food required
-            //they're not wolfing down all the food now are they
 
             SetEfficiencyBonus((float)currentPop * 1 / 21600);
 
@@ -768,13 +768,8 @@ namespace PipeLines
             }
         }
         public override void OnFixedUpdate()
-       // public override void OnUpdate()
         {
-           // System.Diagnostics.Trace.WriteLine("civie pop dt a " + master.ToString() + " c" + slave.ToString());
-            //base.OnFixedUpdate();
-            //var recipe = base.Recipe;
-           // recipe.ToString();
-           // base.
+
             if (slave)
             {
                 //base.OnUpdate();
@@ -801,10 +796,6 @@ namespace PipeLines
                 }
 
             }
-          //use regolith to calcualte the resource change
-           // double dt = calculateRateOverTime();
-            //print("DT is " + dt.ToString());
-
 
             double dt = GetDeltaTimex();
             applyCalculations(dt);
