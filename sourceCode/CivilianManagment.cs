@@ -1,17 +1,13 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+using KSP;
 
-
-
-
-
-namespace PipeLines
+namespace CivilianManagment
 {
-
-
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public class KSPAssemblyDependency : Attribute
     {
@@ -24,7 +20,7 @@ namespace PipeLines
 
 
 
-    public class MovieTheater: BaseConverter
+    public class MovieTheater : BaseConverter
     {
         [KSPField(isPersistant = false, guiActive = false)]
         public float pilotBonus = .10f;
@@ -39,19 +35,19 @@ namespace PipeLines
         [KSPField(isPersistant = false, guiActive = false)]
         public string InspirationResourceName = "inspiration";
 
-        [KSPField(isPersistant = true, guiActive = true, guiName="Movie Type Playing")]
-        public string MovieType="none";
+        [KSPField(isPersistant = true, guiActive = true, guiName = "Movie Type Playing")]
+        public string MovieType = "none";
         [KSPField(isPersistant = true, guiActive = true, guiName = "Movie Type Playing")]
         public string MovieBonus = "none";
 
         void resetPartInspiration()
         {
-           /*  CHECK THIS OUT FOR BUG  */
-			
+            /*  CHECK THIS OUT FOR BUG  */
+
             this.part.RequestResource(InspirationResourceName, 99999999, ResourceFlowMode.NO_FLOW); //reset this part's resource only
-			
+
         }
-		   #region regolith
+        #region regolith
         protected override float GetHeatMultiplier(ConverterResults result, double deltaTime)
         {
             return 0f;
@@ -65,7 +61,7 @@ namespace PipeLines
 
         [KSPField]
         public string RequiredResources = "";
-	
+
         public ConversionRecipe Recipe
         {
             get { return _recipe ?? (_recipe = LoadRecipe()); }
@@ -204,9 +200,9 @@ namespace PipeLines
 
 
         #endregion
-		
-		
-		
+
+
+
         public override void OnUpdate()
         {
             Actions["StartResourceConverterAction"].active = false;
@@ -215,60 +211,60 @@ namespace PipeLines
         }
         public override void OnStart(PartModule.StartState state)
         {
-           
+
 
             base.OnStart(state);
-           
-           Events["StartResourceConverter"].active = false;
-           Events["StopResourceConverter"].active = false;
-         
+
+            Events["StartResourceConverter"].active = false;
+            Events["StopResourceConverter"].active = false;
+
 
         }
-        
-         [KSPEvent(guiName = "Play Racing Movies (engineer bonus)", active = true, guiActive = true)]
-         public void playRacingMovies()
-         {
-             resetPartInspiration();
-             MovieType = "Racing Movies";
-             MovieBonus = "10% reduced Engineer recruitment cost";
-             StartResourceConverter();
-             Events["StartResourceConverter"].active = false;
-             Events["StopResourceConverter"].active = false;
 
-         }
-         [KSPEvent(guiName = "Play Scifi Movies (pilot bonus)", active = true, guiActive = true)]
-         public void playScifi()
-         {
-             resetPartInspiration();
-             MovieType = "Scifi Movies";
-             MovieBonus = "10% reduced Pilot recruitment cost";
-             StartResourceConverter();
-             Events["StartResourceConverter"].active = false;
-             Events["StopResourceConverter"].active = false;
+        [KSPEvent(guiName = "Play Racing Movies (engineer bonus)", active = true, guiActive = true)]
+        public void playRacingMovies()
+        {
+            resetPartInspiration();
+            MovieType = "Racing Movies";
+            MovieBonus = "10% reduced Engineer recruitment cost";
+            StartResourceConverter();
+            Events["StartResourceConverter"].active = false;
+            Events["StopResourceConverter"].active = false;
 
-         }
-         [KSPEvent(guiName = "Play Documentaries (scientist bonus)", active = true, guiActive = true)]
-         public void playDocumentaries()
-         {
-             resetPartInspiration();
-             MovieType = "Documentaries";
-             MovieBonus = "10% reduced Scientist recruitment cost";
-             StartResourceConverter();
-             Events["StartResourceConverter"].active = false;
-             Events["StopResourceConverter"].active = false;
+        }
+        [KSPEvent(guiName = "Play Scifi Movies (pilot bonus)", active = true, guiActive = true)]
+        public void playScifi()
+        {
+            resetPartInspiration();
+            MovieType = "Scifi Movies";
+            MovieBonus = "10% reduced Pilot recruitment cost";
+            StartResourceConverter();
+            Events["StartResourceConverter"].active = false;
+            Events["StopResourceConverter"].active = false;
 
-         }
-         [KSPEvent(guiName = "Close Movie Theater", active = true, guiActive = true)]
-         public void closeTheater()
-         {
-             resetPartInspiration();
-             MovieType = "None";
-             MovieBonus = "No bonus";
+        }
+        [KSPEvent(guiName = "Play Documentaries (scientist bonus)", active = true, guiActive = true)]
+        public void playDocumentaries()
+        {
+            resetPartInspiration();
+            MovieType = "Documentaries";
+            MovieBonus = "10% reduced Scientist recruitment cost";
+            StartResourceConverter();
+            Events["StartResourceConverter"].active = false;
+            Events["StopResourceConverter"].active = false;
+
+        }
+        [KSPEvent(guiName = "Close Movie Theater", active = true, guiActive = true)]
+        public void closeTheater()
+        {
+            resetPartInspiration();
+            MovieType = "None";
+            MovieBonus = "No bonus";
             StopResourceConverter();
             Events["StartResourceConverter"].active = false;
             Events["StopResourceConverter"].active = false;
 
-         }
+        }
 
 
     }
@@ -276,7 +272,7 @@ namespace PipeLines
 
 
 
-    public class CivilianPopulationRegulator :  BaseConverter
+    public class CivilianPopulationRegulator : BaseConverter
     {
         //like the dictionary
         //the food resource name is the name of the "food" resource, which is required to grow or shrink a kerbal.
@@ -301,9 +297,9 @@ namespace PipeLines
         //new civie pop can be recruited at this rate of food per population.  open resource system has a food definition.  That wil lbe fine
 
         [KSPField(isPersistant = true, guiActive = true, guiName = "Rent")]
-        public float taxes = 100;
+        public float taxes = 200;
 
-        [KSPField(isPersistant = true, guiActive = true, guiName = "Time until next pay")]
+        [KSPField(isPersistant = true, guiActive = true, guiName = "Time until Rent payment")]
         public float TimeUntilTaxes = 21600;
 
         [KSPField(isPersistant = false, guiActive = false)]
@@ -355,10 +351,10 @@ namespace PipeLines
         //if the food is less than the population resource then the population will decay over time.
         //whenever TAC LS updates, update these!
         //warning: only default balance rate supported! until i can read configs
-       
+
 
         //if the ship was defocused over a long time calculate where things are
-       // double planetariumIntegration = 0;
+        // double planetariumIntegration = 0;
         bool UsePT = false;
         double calculateRateOverTime()
         {
@@ -368,20 +364,20 @@ namespace PipeLines
 
             double ret = pt - lastTime;
             double dt = TimeWarp.deltaTime;
-            
-            if(!UsePT)
+
+            if (!UsePT)
             {
-                
+
                 ret = dt;
             }
-           
+
 
 
             lastTime = (float)pt;
             return ret;
 
         }
-      
+
         float getRecruitmentRate()
         {
             ////print(FlightGlobals.currentMainBody.name);
@@ -419,16 +415,16 @@ namespace PipeLines
                 }
 
 
-                
+
 
             }
             return foundMaster;
         }
 
-                               
+
         public override void OnStart(PartModule.StartState state)
         {
-            
+
             if (!HighLogic.LoadedSceneIsFlight)
             {
                 base.OnStart(state);
@@ -439,20 +435,20 @@ namespace PipeLines
                 base.OnStart(state);
                 return;
             }
-            if(master || slave)
+            if (master || slave)
             {
                 base.OnStart(state);
                 return;
             }
-            
+
             master = true;
             var partsWithCivies = vessel.FindPartModulesImplementing<CivilianPopulationRegulator>();
-            foreach(CivilianPopulationRegulator p in partsWithCivies)
+            foreach (CivilianPopulationRegulator p in partsWithCivies)
             {
-                if(p.master)
+                if (p.master)
                     continue;
-                p.slave = true; 
-                if(p.civilianDock)
+                p.slave = true;
+                if (p.civilianDock)
                 {
                     civilianDock = p.civilianDock;
                     civilianDockGrowthRate = p.civilianDockGrowthRate;
@@ -460,11 +456,11 @@ namespace PipeLines
 
             }
             StartResourceConverter();
-          
+
 
             base.OnStart(state);
         }
-          bool getTheaterBonus()
+        bool getTheaterBonus()
         {
             var theaters = vessel.FindPartModulesImplementing<MovieTheater>();
             foreach (MovieTheater t in theaters)
@@ -473,16 +469,16 @@ namespace PipeLines
             return false;
         }
 
-   #region regolith
-		
-		
-		protected override float GetHeatMultiplier(ConverterResults result, double deltaTime)
+        #region regolith
+
+
+        protected override float GetHeatMultiplier(ConverterResults result, double deltaTime)
         {
             return 0f;
         }
 
 
-	   [KSPField] 
+        [KSPField]
         public string RecipeInputs = "";
 
         [KSPField]
@@ -491,7 +487,7 @@ namespace PipeLines
         [KSPField]
         public string RequiredResources = "";
 
-		
+
         public ConversionRecipe Recipe
         {
             get { return _recipe ?? (_recipe = LoadRecipe()); }
@@ -522,10 +518,10 @@ namespace PipeLines
                     {
                         print(String.Format("[REGOLITH] - INPUT {0} {1}", inputs[ip], inputs[ip + 1]));
                         r.Inputs.Add(new ResourceRatio
-                                     {
-                                         ResourceName = inputs[ip].Trim(),
-                                         Ratio = Convert.ToDouble(inputs[ip + 1].Trim())
-                                     });
+                        {
+                            ResourceName = inputs[ip].Trim(),
+                            Ratio = Convert.ToDouble(inputs[ip + 1].Trim())
+                        });
                     }
                 }
 
@@ -537,11 +533,11 @@ namespace PipeLines
                         print(String.Format("[REGOLITH] - OUTPUTS {0} {1} {2}", outputs[op], outputs[op + 1],
                             outputs[op + 2]));
                         r.Outputs.Add(new ResourceRatio
-                                      {
-                                          ResourceName = outputs[op].Trim(),
-                                          Ratio = Convert.ToDouble(outputs[op + 1].Trim()),
-                                          DumpExcess = Convert.ToBoolean(outputs[op + 2].Trim())
-                                      });
+                        {
+                            ResourceName = outputs[op].Trim(),
+                            Ratio = Convert.ToDouble(outputs[op + 1].Trim()),
+                            DumpExcess = Convert.ToBoolean(outputs[op + 2].Trim())
+                        });
                     }
                 }
 
@@ -552,10 +548,10 @@ namespace PipeLines
                     {
                         print(String.Format("[REGOLITH] - REQUIREMENTS {0} {1}", requirements[rr], requirements[rr + 1]));
                         r.Requirements.Add(new ResourceRatio
-                                           {
-                                               ResourceName = requirements[rr].Trim(),
-                                               Ratio = Convert.ToDouble(requirements[rr + 1].Trim()),
-                                           });
+                        {
+                            ResourceName = requirements[rr].Trim(),
+                            Ratio = Convert.ToDouble(requirements[rr + 1].Trim()),
+                        });
                     }
                 }
             }
@@ -573,7 +569,7 @@ namespace PipeLines
             sb.Append(".");
             sb.Append("\n");
             sb.Append(ConverterName);
-            sb.Append("\n\n<color=#99FF00>Inputs:</color>"); 
+            sb.Append("\n\n<color=#99FF00>Inputs:</color>");
             foreach (var input in recipe.Inputs)
             {
                 sb.Append("\n - ")
@@ -591,7 +587,7 @@ namespace PipeLines
                 {
                     sb.Append(String.Format("{0:0.00}", input.Ratio)).Append("/sec");
                 }
-                    
+
             }
             sb.Append("\n<color=#99FF00>Outputs:</color>");
             foreach (var output in recipe.Outputs)
@@ -626,15 +622,15 @@ namespace PipeLines
             sb.Append("\n");
             return sb.ToString();
         }
-		
-		#endregion
+
+        #endregion
 
         double calculateRent(double x)
         {
-            //up to 50 people the rent is 100 per
+            //up to 50 people the rent is 200 per
 
             double y = x;
-            double rent = 100;
+            double rent = 200;
             double totalRent = 0;
             while (y > 0)
             {
@@ -654,86 +650,91 @@ namespace PipeLines
 
         void applyCalculations(double dt)
         {
-          //  print("apstart");
-            double foodbudget =  base.ResBroker.AmountAvailable(this.part,foodResourceName, dt, "ALL_VESSEL");//getResourceBudget(foodResourceName);
-           // PartResourceDefinition def = new PartResourceDefinition(foodResourceName);
-           // print("1");
+            //  print("apstart");
+            double foodbudget = base.ResBroker.AmountAvailable(this.part, foodResourceName, dt, "ALL_VESSEL");//getResourceBudget(foodResourceName);
+            // PartResourceDefinition def = new PartResourceDefinition(foodResourceName);
+            // print("1");
             //mass = unit * density
             //mass / density = unit
             double foodRequired = kerbalMass / 0.28102905982906; //lol density of food in kg
             double currentPop = base.ResBroker.AmountAvailable(this.part, populationResourceName, dt, "ALL_VESSEL");//getResourceBudget(populationResourceName);
-           
+
             growthRate = (float)(currentPop / reproductionRate);
             if (getTheaterBonus())
-                growthRate += growthRate * .5f;	
+                growthRate += growthRate * .5f;
             if (growthRate < 1)  //can't grow population unless it's big enough
                 growthRate = 0;
-           // print("2");
+            // print("2");
             if (civilianDock)
             {
                 foodRequired = 0; //new kerbals arriving don't need to spend food to grow
                 growthRate = getRecruitmentRate(); //kerbal recruitment much faster than reproduction
             }
-           // print("3");
+            // print("3");
             bool needsMet = true;
-           
+
             //calculate each requirement!
             //needs and wastes are already calibrated for conservation of mass
             //just see if we scaled one
             //Missing inputs
-           // Debug.Log(base.status + " " + dt.ToString() + base.RecipeInputs);
+            // Debug.Log(base.status + " " + dt.ToString() + base.RecipeInputs);
             double decayMultiplier = 1;
             needsMet = !base.status.Contains("missing");
             //print("3a");
             //no air
-           // needsMet = needsMet && (co2 != co2Cap);
+            // needsMet = needsMet && (co2 != co2Cap);
             //if (co2 == co2Cap)
-             //   decayMultiplier = 10; //decay faster with no air
-          
+            //   decayMultiplier = 10; //decay faster with no air
+
             if (needsMet)
             {
-              //  print("3b");
+                //  print("3b");
                 populationGrowthTimer += (float)dt * (float)growthRate;
                 populationDecayTimer = 0;
                 TimeUntilTaxes -= (float)dt;
-                float taxesAcquired =  (float)calculateRent(currentPop); //100 funds per civilian
+                float taxesAcquired = (float)calculateRent(currentPop); //100 funds per civilian
                 taxes = taxesAcquired;
-              //  print("3c");
-                if(TimeUntilTaxes < 0)
+                //  print("3c");
+                if (TimeUntilTaxes < 0)
                 {
-                    
-                    //CurrencyModifierQuery q = CurrencyModifierQuery.RunQuery(TransactionReasons.ContractReward, taxesAcquired, 0, 0);
-                   // q.AddDelta(Currency.Funds, taxesAcquired);
-                    Funding.Instance.AddFunds(taxes, TransactionReasons.Vessels);
-                    TimeUntilTaxes = 21600;
-                   
+                    if (HighLogic.CurrentGame.Mode == Game.Modes.CAREER)
+                    {
+                        if (vessel.situation != Vessel.Situations.LANDED && vessel.mainBody.bodyName == "Kerbin")
+                            
+                        {
+                            //CurrencyModifierQuery q = CurrencyModifierQuery.RunQuery(TransactionReasons.ContractReward, taxesAcquired, 0, 0);
+                            // q.AddDelta(Currency.Funds, taxesAcquired);
+                            Funding.Instance.AddFunds(taxes, TransactionReasons.Vessels);
+                            TimeUntilTaxes = 21600;
+                        }
+                    }
                 }
-               
+
 
             }
-               
+
             else
             {
                 populationDecayTimer += (float)dt * (float)decayMultiplier;
                 populationGrowthTimer = 0;
             }
-          //  print("4");
+            //  print("4");
             while (populationGrowthTimer > populationGrowthRate && foodbudget > foodRequired) //population can grow!
             {
                 double popMade = this.part.RequestResource(populationResourceName, -1);
                 populationGrowthTimer -= populationGrowthRate;
-                if(popMade < 0)
-                this.part.RequestResource(foodResourceName, foodRequired);
+                if (popMade < 0)
+                    this.part.RequestResource(foodResourceName, foodRequired);
 
             }
-           // print("5");
+            // print("5");
             while (populationDecayTimer > populationDecayRate && currentPop > 0) //population can shrink!  if there's no room to store the resources
-                //of the dead kerbal part of him gets ejected into space.  Sucks to be wasteful!
+            //of the dead kerbal part of him gets ejected into space.  Sucks to be wasteful!
             {
                 double popMade = this.part.RequestResource(populationResourceName, 1);
                 populationDecayTimer -= populationDecayRate;
                 if (popMade > 0)
-                this.part.RequestResource(foodResourceName, -foodRequired);
+                    this.part.RequestResource(foodResourceName, -foodRequired);
 
             }
 
@@ -753,10 +754,10 @@ namespace PipeLines
                 if (Math.Abs(lastUpdateTime) < float.Epsilon)
                 {
                     // Just started running
-                   // lastUpdateTime = Planetarium.GetUniversalTime();
+                    // lastUpdateTime = Planetarium.GetUniversalTime();
                     return -1;
                 }
-                
+
                 var deltaTime = Math.Min(Planetarium.GetUniversalTime() - lastUpdateTime, ResourceUtilities.GetMaxDeltaTime());
                 //lastUpdateTime += deltaTime;
                 return deltaTime;
@@ -799,21 +800,21 @@ namespace PipeLines
 
             double dt = GetDeltaTimex();
             applyCalculations(dt);
-            base.OnFixedUpdate(); 
-            
-            double currentPop = getResourceBudget(populationResourceName);
-           // if (currentPop > 0)
-               
-            //else
-              //  
+            base.OnFixedUpdate();
 
-           // UsePT = false;
-           // base.OnUpdate();
+            double currentPop = getResourceBudget(populationResourceName);
+            // if (currentPop > 0)
+
+            //else
+            //  
+
+            // UsePT = false;
+            // base.OnUpdate();
         }
         double getResourceBudget(string name)
         {
             //   
-            if (this.vessel != null) 
+            if (this.vessel != null)
             {
                 // ////print("found vessel event!");
                 var resources = vessel.GetActiveResources();
@@ -898,7 +899,7 @@ namespace PipeLines
         [KSPField(isPersistant = false, guiActive = false)]
         public float inspirationCost;
 
-       
+
         public static void screenMessage(string msg)
         {
             ScreenMessage smg = new ScreenMessage(msg, 4.0f, ScreenMessageStyle.UPPER_CENTER);
@@ -909,9 +910,9 @@ namespace PipeLines
         {
             var theaters = vessel.FindPartModulesImplementing<MovieTheater>();
             Debug.Log(theaters.Count);
-           
 
-            foreach(MovieTheater t in theaters)
+
+            foreach (MovieTheater t in theaters)
             {
                 Debug.Log(t.MovieType);
                 if (t.MovieType == "Racing Movies" && job == KerbalJob.Engineer)
@@ -976,7 +977,7 @@ namespace PipeLines
         [KSPEvent(guiName = "Recruit Kerbal", active = true, guiActive = true)]
         public void RecruitKerbal()
         {
-           //generate a random kerbal and populate him into this ship
+            //generate a random kerbal and populate him into this ship
 
             //do we have enough pop to make a kerbal?
             float budget = getResourceBudget(populationName);
@@ -986,8 +987,8 @@ namespace PipeLines
                 return;
             }
             budget = getResourceBudget(foodName);
-           
-            if(vessel.GetCrewCount() < vessel.GetCrewCapacity())
+
+            if (vessel.GetCrewCount() < vessel.GetCrewCapacity())
             {
                 //get one available crew from the roster who's unassigned
 
@@ -996,17 +997,17 @@ namespace PipeLines
                 print(newMember.experience);
                 print(newMember.experienceLevel);
 
-                
+
 
                 bool addSuccess = part.AddCrewmember(newMember);
                 if (addSuccess)
                 {
                     part.RequestResource(populationName, civilianPopulationCost); //spend the population if we have it.
-                   
+
                 }
 
             }
-          
+
 
 
         }
@@ -1014,19 +1015,19 @@ namespace PipeLines
         [KSPEvent(guiName = "Recruit Pilot", active = true, guiActive = true)]
         public void RecruitPilotKerbal()
         {
-            
+
             float budget = getResourceBudget(populationName);
             if (budget < civilianPopulationCost)
             {
                 screenMessage("No civilians to recruit");
                 return;
             }
-           
+
             int xplevel = 1;
             //if this is a flight school recruitment requires 5000 flight experience
             double flightXP = getResourceBudget(flightExperienceResourceName);
             double tempFlightXPCost = applyTheaterBonus(flightExperienceCost, KerbalJob.Pilot);
-            if(flightschool)
+            if (flightschool)
             {
 
                 Debug.Log("flight cost: " + tempFlightXPCost.ToString());
@@ -1038,7 +1039,7 @@ namespace PipeLines
                 xplevel = 3;
             }
             double inspriaton = getResourceBudget(inspirationResourceName);
-            double tempInspirationCost =  applyTheaterBonus(inspirationCost, KerbalJob.Pilot);
+            double tempInspirationCost = applyTheaterBonus(inspirationCost, KerbalJob.Pilot);
 
             if (inspriaton < tempInspirationCost)
             {
@@ -1061,7 +1062,7 @@ namespace PipeLines
                 {
                     part.RequestResource(populationName, civilianPopulationCost); //spend the population if we have it.
                     part.RequestResource(inspirationResourceName, tempInspirationCost);
-                    if(flightschool)
+                    if (flightschool)
                         part.RequestResource(flightExperienceResourceName, tempFlightXPCost);
                 }
 
@@ -1080,7 +1081,7 @@ namespace PipeLines
                 screenMessage("No civilians to recruit");
                 return;
             }
-            
+
             int xplevel = 1;
             double education = getResourceBudget(educationResourceName);
             double tempEducationCost = applyTheaterBonus(educationCost, KerbalJob.Engineer);
@@ -1116,8 +1117,8 @@ namespace PipeLines
                 if (addSuccess)
                 {
                     part.RequestResource(populationName, civilianPopulationCost); //spend the population if we have it.
-                    if(university)
-                    part.RequestResource(educationResourceName, tempEducationCost);
+                    if (university)
+                        part.RequestResource(educationResourceName, tempEducationCost);
                     part.RequestResource(inspirationResourceName, tempInspirationCost);
                 }
 
@@ -1136,9 +1137,9 @@ namespace PipeLines
                 screenMessage("No civilians to recruit");
                 return;
             }
-           
+
             int xplevel = 1;
-           
+
             double education = getResourceBudget(educationResourceName);
             double tempEducationCost = applyTheaterBonus(educationCost, KerbalJob.Scientist);
             if (university)
@@ -1171,7 +1172,7 @@ namespace PipeLines
                 if (addSuccess)
                 {
                     part.RequestResource(populationName, civilianPopulationCost); //spend the population if we have it.
-                    if(university)
+                    if (university)
                         part.RequestResource(educationResourceName, tempEducationCost);
                     part.RequestResource(inspirationResourceName, tempInspirationCost);
                 }
@@ -1184,7 +1185,7 @@ namespace PipeLines
 
         public override void OnStart(PartModule.StartState state)
         {
-            if (allowEngineerScientist ||allowPilot )
+            if (allowEngineerScientist || allowPilot)
                 Events["RecruitKerbal"].guiActive = false;
             if (!allowEngineerScientist)
                 Events["RecruitEngineerKerbal"].guiActive = false;
@@ -1193,7 +1194,7 @@ namespace PipeLines
             if (!allowPilot)
                 Events["RecruitPilotKerbal"].guiActive = false;
 
-            
+
             base.OnStart(state);
         }
         float getResourceBudget(string name)
@@ -1219,11 +1220,5 @@ namespace PipeLines
             return 0;
         }
     }
-   
-
-
-     
-     
-   
    
 }
