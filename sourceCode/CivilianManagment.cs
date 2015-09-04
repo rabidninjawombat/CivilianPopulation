@@ -388,7 +388,7 @@ namespace CivilianManagment
                 case "Mun":
                     return civilianDockGrowthRate / 10;
                 case "Minmus":
-                    return civilianDockGrowthRate / 100;
+                    return civilianDockGrowthRate / 50;
                 default:
                     return 0;
             }
@@ -699,14 +699,11 @@ namespace CivilianManagment
                 {
                     if (HighLogic.CurrentGame.Mode == Game.Modes.CAREER)
                     {
-                        if (vessel.situation != Vessel.Situations.LANDED && vessel.mainBody.bodyName == "Kerbin")
-                            
-                        {
-                            //CurrencyModifierQuery q = CurrencyModifierQuery.RunQuery(TransactionReasons.ContractReward, taxesAcquired, 0, 0);
-                            // q.AddDelta(Currency.Funds, taxesAcquired);
+                                                 
+                        
                             Funding.Instance.AddFunds(taxes, TransactionReasons.Vessels);
                             TimeUntilTaxes = 21600;
-                        }
+                        
                     }
                 }
 
@@ -891,7 +888,8 @@ namespace CivilianManagment
         public string educationResourceName;
         [KSPField(isPersistant = false, guiActive = false)]
         public float educationCost;
-
+        [KSPField(isPersistant = false, guiActive = false)]
+        public int xplevel;
 
 
         [KSPField(isPersistant = false, guiActive = false)]
@@ -965,11 +963,38 @@ namespace CivilianManagment
 
             float startXP = KerbalRoster.GetExperienceLevelRequirement(startLevel);
 
-            newMember.experience = startXP + 1;
-            newMember.experienceLevel = KerbalRoster.CalculateExperienceLevel(newMember.experience);
+            if (xplevel == 3)
+            {
+                newMember.flightLog.AddEntry("Orbit,Kerbin");
+                newMember.flightLog.AddEntry("Suborbit,Kerbin");
+                newMember.flightLog.AddEntry("Flight,Kerbin");
+                newMember.flightLog.AddEntry("Land,Kerbin");
+                newMember.flightLog.AddEntry("Recover");
+                newMember.flightLog.AddEntry("Flyby,Mun");
+                newMember.flightLog.AddEntry("Orbit,Mun");
+                newMember.flightLog.AddEntry("Land,Mun");
+                newMember.flightLog.AddEntry("Flyby,Minmus");
+                newMember.flightLog.AddEntry("Orbit,Minmus");
+                newMember.flightLog.AddEntry("Land,Minmus");
+                newMember.flightLog.AddEntry("Flyby,Sun");
+                newMember.ArchiveFlightLog();
+                newMember.experience = 8;
+                newMember.experienceLevel = 3;
+            }
+            else
+            {
+                newMember.flightLog.AddEntry("Orbit,Kerbin");
+                newMember.flightLog.AddEntry("Suborbit,Kerbin");
+                newMember.flightLog.AddEntry("Flight,Kerbin");
+                newMember.flightLog.AddEntry("Land,Kerbin");
+                newMember.flightLog.AddEntry("Recover");
+                newMember.ArchiveFlightLog();
+                newMember.experience = 3;
+                newMember.experienceLevel = 1;
+            }
+            
             return newMember;
-
-
+            
         }
 
 
@@ -1023,7 +1048,7 @@ namespace CivilianManagment
                 return;
             }
 
-            int xplevel = 1;
+            xplevel = 1;
             //if this is a flight school recruitment requires 5000 flight experience
             double flightXP = getResourceBudget(flightExperienceResourceName);
             double tempFlightXPCost = applyTheaterBonus(flightExperienceCost, KerbalJob.Pilot);
@@ -1082,7 +1107,7 @@ namespace CivilianManagment
                 return;
             }
 
-            int xplevel = 1;
+            xplevel = 1;
             double education = getResourceBudget(educationResourceName);
             double tempEducationCost = applyTheaterBonus(educationCost, KerbalJob.Engineer);
             Debug.Log("engie cost: " + tempEducationCost.ToString());
@@ -1138,7 +1163,7 @@ namespace CivilianManagment
                 return;
             }
 
-            int xplevel = 1;
+            xplevel = 1;
 
             double education = getResourceBudget(educationResourceName);
             double tempEducationCost = applyTheaterBonus(educationCost, KerbalJob.Scientist);
