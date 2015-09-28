@@ -896,7 +896,8 @@ namespace CivilianManagment
         public string inspirationResourceName;
         [KSPField(isPersistant = false, guiActive = false)]
         public float inspirationCost;
-
+        [KSPField(isPersistant = false, guiActive = false)]
+        public string career;
 
         public static void screenMessage(string msg)
         {
@@ -948,18 +949,16 @@ namespace CivilianManagment
             var newMember = roster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
 
             //need to make an experience trait specifically!
-            switch (job)
+            
+            
+            while (newMember.experienceTrait.Title != career)
             {
-                case KerbalJob.Pilot:
-                    KerbalRoster.SetExperienceTrait(newMember, "Pilot");
-                    break;
-                case KerbalJob.Engineer:
-                    KerbalRoster.SetExperienceTrait(newMember, "Engineer");
-                    break;
-                case KerbalJob.Scientist:
-                    KerbalRoster.SetExperienceTrait(newMember, "Scientist");
-                    break;
+                HighLogic.CurrentGame.CrewRoster.Remove(newMember);
+                newMember = HighLogic.CurrentGame.CrewRoster.GetNewKerbal(ProtoCrewMember.KerbalType.Crew);
+                
             }
+                     
+
 
             float startXP = KerbalRoster.GetExperienceLevelRequirement(startLevel);
 
@@ -1040,7 +1039,7 @@ namespace CivilianManagment
         [KSPEvent(guiName = "Recruit Pilot", active = true, guiActive = true)]
         public void RecruitPilotKerbal()
         {
-
+            career = "Pilot";
             float budget = getResourceBudget(populationName);
             if (budget < civilianPopulationCost)
             {
@@ -1099,7 +1098,7 @@ namespace CivilianManagment
         [KSPEvent(guiName = "Recruit Engineer", active = true, guiActive = true)]
         public void RecruitEngineerKerbal()
         {
-
+            career = "Engineer";
             float budget = getResourceBudget(populationName);
             if (budget < civilianPopulationCost)
             {
@@ -1155,7 +1154,7 @@ namespace CivilianManagment
         [KSPEvent(guiName = "Recruit Scientist", active = true, guiActive = true)]
         public void RecruitScienceKerbal()
         {
-
+            career = "Scientist";
             float budget = getResourceBudget(populationName);
             if (budget < civilianPopulationCost)
             {
