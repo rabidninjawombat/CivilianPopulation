@@ -14,7 +14,7 @@ namespace CivilianManagment
         public string name;
         public int versionMajor;
         public int versionMinor;
-
+        
         public extern KSPAssemblyDependency(string name, int versionMajor, int versionMinor);
     }
 
@@ -684,8 +684,11 @@ namespace CivilianManagment
             // print("2");
             if (inKerbinSOI || inMinmusSoi || inMunSoi)
             {
-                foodRequired = 0; //new kerbals arriving don't need to spend food to grow
-                growthRate = getRecruitmentRate(); //kerbal recruitment much faster than reproduction
+                if (civilianDock)
+                {
+                    foodRequired = 0; //new kerbals arriving don't need to spend food to grow
+                    growthRate = getRecruitmentRate(); //kerbal recruitment much faster than reproduction
+                }
             }
             // print("3");
             bool needsMet = true;
@@ -1106,7 +1109,7 @@ namespace CivilianManagment
 
             }
 
-
+            
 
         }
         [KSPEvent(guiName = "Recruit Engineer", active = true, guiActive = true)]

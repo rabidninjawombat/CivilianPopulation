@@ -1,4 +1,3 @@
--Cleaned up megadrill texture
--Added New Storage Containers.  3 sizes for Liquid, 3 sizes for Solid storage.   
--Depreciated old storage containers.  (They can be found in the Parts\Depreciated folder)  If you do not have any in use in your save game, you can delete them safetly,  otherwise They will be gone completly in the next release. 
-	-to-do,  balance container compacity
+-- Fixed animation on small reactor. 
+--small bug with craft in kerbin SOI without Civilian Docking Ports
+--added tweakscale config
